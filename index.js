@@ -1,17 +1,23 @@
 console.log("the start");
 //getUser(1, printUserwithreposwithcommits);
 
-const userone = getUser(1);
+// const userone = getUser(1);
 
-userone.then(user => {
-  console.log(user);
-  getReposbyUsrname(user).then(repo => {
-    console.log(repo);
-    getCommitsbyRepo(repo).then(commits => {
-      console.log(commits);
-    });
-  });
-});
+// userone.then(user => {
+//   console.log(user);
+//   getReposbyUsrname(user).then(repo => {
+//     console.log(repo);
+//     getCommitsbyRepo(repo).then(commits => {
+//       console.log(commits);
+//     });
+//   });
+// });
+
+getUser(1)
+  .then(user => getReposbyUsrname(user.gitUsername))
+
+  .then(repos => getCommitsbyRepo(repos[0]))
+  .then(commits => console.log(commits));
 
 console.log("the end");
 
@@ -46,7 +52,7 @@ function getUser(id) {
 function getReposbyUsrname(username) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("calling github api with username" + username);
+      console.log("getting repos with username" + username);
       resolve(["repo1", "repo2", "repo3"]);
     }, 2000);
   });
