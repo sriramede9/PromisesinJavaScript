@@ -13,11 +13,23 @@ console.log("the start");
 //   });
 // });
 
-getUser(1)
-  .then(user => getReposbyUsrname(user.gitUsername))
+// getUser(1)
+//   .then(user => getReposbyUsrname(user.gitUsername))
 
-  .then(repos => getCommitsbyRepo(repos[0]))
-  .then(commits => console.log(commits));
+//   .then(repos => getCommitsbyRepo(repos[0]))
+//   .then(commits => console.log(commits));
+
+async function getcommitsbyUser() {
+  try {
+    const awuser = await getUser(1);
+    const awrepos = await getReposbyUsrname(awuser.gitUsername);
+    const awcommits = await getCommitsbyRepo(awrepos[1]);
+    console.log(awcommits);
+  } catch (err) {
+    console.log(err);
+  }
+}
+getcommitsbyUser();
 
 console.log("the end");
 
