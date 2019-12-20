@@ -28,11 +28,24 @@ console.log("the start");
 
 // getCommitsbyRepo("repo1").then(commits => console.log(commits));
 
-getUser(1)
-  .then(user => getReposByUserName(user.gitUserName))
-  .then(repos => getCommitsbyRepo(repos[0]))
-  .then(commits => console.log(commits));
+// getUser(1)
+//   .then(user => getReposByUserName(user.gitUserName))
+//   .then(repos => getCommitsbyRepo(repos[0]))
+//   .then(commits => console.log(commits));
 
+//using async await
+
+async function getcommits() {
+  try {
+    const awuser = await getUser(1);
+    const awrepos = await getReposByUserName(awuser.gitUserName);
+    const commits = await getCommitsbyRepo(awrepos[0]);
+    console.log(commits);
+  } catch (err) {
+    console.log("error is" + err);
+  }
+}
+getcommits();
 console.log("the end");
 
 function getUser(id) {
