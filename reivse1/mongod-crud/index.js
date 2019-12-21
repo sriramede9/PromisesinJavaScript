@@ -8,7 +8,15 @@ mongoose
 const courseSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3, maxlength: 255 },
   author: String,
-  tags: [String],
+  tags: {
+    type: Array,
+    validate: {
+      validator: function(v) {
+        return v && v.length > 0;
+      },
+      message: "Tag's should not be empty"
+    }
+  },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
   price: { type: Number, required: true }
@@ -20,7 +28,7 @@ async function createCourse() {
   const course = new Course({
     name: "Gagan",
     author: "Sri",
-    tags: ["alpha", "beta", "gama"],
+    tags: [],
     isPublished: true,
     price: 24
   });
@@ -33,7 +41,7 @@ async function createCourse() {
     //if false implies failed validation and throws exception
     // const result = await course.save();
     course.validate();
-    console.log(result);
+    //console.log(result);
   } catch (err) {
     console.log(err.message);
   }
