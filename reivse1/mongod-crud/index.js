@@ -6,11 +6,12 @@ mongoose
   .catch(err => console.log("error couldn't connect to mongodb.." + err));
 
 const courseSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, minlength: 3, maxlength: 255 },
   author: String,
   tags: [String],
   date: { type: Date, default: Date.now },
-  isPublished: Boolean
+  isPublished: Boolean,
+  price: { type: Number, required: true }
 });
 
 const Course = mongoose.model("Course", courseSchema);
@@ -19,19 +20,19 @@ async function createCourse() {
   const course = new Course({
     name: "Gagan",
     author: "Sri",
-    tags: ["Omega", "tissot", "Citizen"],
-    isPublished: true
+    tags: ["alpha", "beta", "gama"],
+    isPublished: true,
+    price: 24
   });
   try {
-    
-
     //validation using class
 
     // const validatedCourse = await course.validate();
 
     //if true return null
     //if false implies failed validation and throws exception
-    const result = await course.save();
+    // const result = await course.save();
+    course.validate();
     console.log(result);
   } catch (err) {
     console.log(err.message);
