@@ -36,7 +36,7 @@ async function getCourses() {
   try {
     // const courses = await Course.find();
 
-    const courses = await Course.find({ author: "Sri" })
+    const courses = await Course.find({ name: /^J/ })
       .limit(1)
       .sort({ name: -1 })
       .select({
