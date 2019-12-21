@@ -50,7 +50,7 @@ async function getCourses() {
   }
 }
 
-getCourses();
+//getCourses();
 
 async function getCourseseasy() {
   //eq --equal
@@ -81,3 +81,25 @@ async function getCourseseasy() {
     console.log(err.message);
   }
 }
+
+//how to update courses!!
+
+async function updateCourse(id) {
+  try {
+    //get course by id
+
+    const course = await Course.findById(id);
+
+    if (!course) return;
+
+    const result = course.set({
+      isPublished: true,
+      author: "sri ram Ede"
+    });
+    console.log(result);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+updateCourse("5dfd570bc27a4825c4ce85e1");
