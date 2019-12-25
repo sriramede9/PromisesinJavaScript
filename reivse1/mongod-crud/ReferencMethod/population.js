@@ -55,7 +55,7 @@ async function createCourse(name, author) {
 async function getCourses() {
   try {
     const courses = await Course.find()
-      .populate("author", "name") //gives you name of the author
+      .populate("author", "name -_id") //gives you name of the author
       .select(["name", "author"]); //gives name of the course +author obj id and populate is filtering name from it
     console.log(courses);
   } catch (err) {
