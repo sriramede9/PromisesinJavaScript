@@ -6,15 +6,27 @@ mongoose
   .catch(err => console.log("error couldn't connect to mongodb.." + err));
 
 const courseSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 3, maxlength: 255 },
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 255
+  },
   author: String,
   tags: {
     type: Array,
+
     validate: {
-      validator: function(v) {
-        return v && v.length > 0;
+      isAsync: true,
+      validator: function(v, callback) {
+        //cannnot use arrow functions
+
+        setTimeout(() => {
+          const result = v && v.length > 0;
+          callback(result);
+        }, 4000);
       },
-      message: "Tag's should not be empty"
+      message: "Tag's should have atlest one value"
     }
   },
   date: { type: Date, default: Date.now },
@@ -43,6 +55,10 @@ async function createCourse() {
     course.validate();
     //console.log(result);
   } catch (err) {
+    for (er in err.errors) {
+      console.log(err.errors[er].message);
+    }
+
     console.log(err.message);
   }
 }
